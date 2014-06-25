@@ -27,19 +27,23 @@ class SameAsTest extends \PHPUnit_Framework_TestCase
         $op = new Operator\SameAs($varA, $varB);
         $this->assertFalse($op->evaluate($context));
 
+        $context = new Context();
         $context['a'] = 2;
         $this->assertTrue($op->evaluate($context));
 
+        $context = new Context();
         $context['a'] = 3;
         $context['b'] = function() {
             return 3;
         };
         $this->assertTrue($op->evaluate($context));
 
+        $context = new Context();
         $context['a'] = 3;
         $context['b'] = '3';
         $this->assertFalse($op->evaluate($context));
 
+        $context = new Context();
         $context['a'] = new \StdClass();
         $context['a']->attributes = 1;
         $context['b'] = new \StdClass();
@@ -49,10 +53,12 @@ class SameAsTest extends \PHPUnit_Framework_TestCase
         $context['b'] = $context['a'];
         $this->assertTrue($op->evaluate($context));
 
+        $context = new Context();
         $context['a'] = 1;
         $context['b'] = true;
         $this->assertFalse($op->evaluate($context));
 
+        $context = new Context();
         $context['a'] = null;
         $context['b'] = false;
         $this->assertFalse($op->evaluate($context));
